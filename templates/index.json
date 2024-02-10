@@ -1,0 +1,8 @@
+{
+    "sections": {
+        "template_header":{
+            "type": "section_header"
+        }
+    },
+    "order": ["template_header"]
+}

@@ -3,12 +3,23 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap');
+html,body,.layout-container,#shopify-section-template--17339922088178__template{
+    @apply h-full;
+}
+
+.layout-container{
+    @apply mx-auto px-2 sm:px-4 lg:px-12;
+}
 body{
     font-family: 'Poppins', sans-serif;
 }
 .mnavbar{
     background-color: #f9ece6;
     @apply  rounded-t-[1rem];
+}
+.mnavbar2{
+    background-color: #ffff;
+    @apply  rounded-[1rem] border-2 shadow-inner;
 }
 
 .mnavbar_link{
@@ -28,4 +39,18 @@ body{
 .carousel_container{
     background-color: pink;
     height: 400px;
+}
+
+.contact_placeholder_styles{
+    @apply placeholder:text-[#101010];
+}
+
+.contact_text_input{
+    font-size: 17px;
+    @apply contact_placeholder_styles;
+    @apply border border-[#919191] p-4 w-full focus-visible:outline-none text-[#101010];
+}
+
+.contact_input_wrapper{
+    @apply mb-4;
 }

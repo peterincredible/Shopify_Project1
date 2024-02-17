@@ -1,0 +1,75 @@
+<div class="shadow-2xl p-8 ">
+    <h1 class="mb-4 font-bold  text-2xl {{section.settings.header_aligment}}">CONTACT US</h1>
+    {% form 'contact' %}
+        <div class="">
+            {{ form.errors | default_errors }}
+            <div class="contact_input_wrapper">
+                    <input class="contact_text_input" placeholder="First Name" name="contact[first_name]" id="first-name"/>
+            </div>
+            <div class="contact_input_wrapper">
+                <input class="contact_text_input" placeholder="Last Name" name="contact[last_name]" id="last-name"/>
+            </div>
+            <div class="contact_input_wrapper">
+                    <input class="contact_text_input" placeholder="Email" name="contact[email]" id="email"/>
+            </div>
+            <div class="contact_input_wrapper">
+                    <input class="contact_text_input" placeholder="Phone" name="contact[phone]" id="last-name"/>
+            </div>
+                
+            <div class="contact_input_wrapper">
+                    <textarea class="contact_text_input" name="contact[body]" id="message">Message</textarea>
+            </div>
+            <div class="contact_input_wrapper flex {{section.settings.submit_btn_aligment}}">
+                    <input type="submit"  class="bg-[#db4f66] text-white w-[200px] h-[60px]" value="SEND"/>
+            </div>
+        </div>
+    {%endform%}
+</div>
+
+{% schema %}
+{
+    "name": "Contact Section",
+    "settings": [
+                    {
+                        "type": "radio",
+                        "id": "header_aligment",
+                        "label": "Header alignment",
+                        "options": [
+                            {
+                                "value": "text-left",
+                                "label": "left"
+                            },
+                            {
+                                "value": "text-center",
+                                "label": "center"
+                            },
+                            {
+                                "value": "text-right",
+                                "label": "right"
+                            }
+                        ],
+                        "default": "text-left"
+                    },
+                    {
+                        "type": "radio",
+                        "id": "submit_btn_aligment",
+                        "label": "alignment submit button",
+                        "options": [
+                            {
+                                "value": "justify-left",
+                                "label": "left"
+                            },
+                            {
+                                "value": "justify-center",
+                                "label": "center"
+                            },
+                            {
+                                "value": "justify-right",
+                                "label": "right"
+                            }
+                        ],
+                        "default": "justify-center"
+                    }
+                ]
+}
+{% endschema %}

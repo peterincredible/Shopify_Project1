@@ -9,8 +9,16 @@
 </head>
 
 <body>
-    <div class="layout-container">
-        {{ content_for_layout }}
+    <div class="layout-container flex flex-col">
+        {% render "header2" %}
+
+        <div class="flex items-center justify-center grow md:min-h-[800px] my-5">
+            <div class="w-full max-w-[600px]">
+            {{ content_for_layout }}
+            </div>
+        </div>
+        {% render "footer" %}
+        
     </div>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
 </body>

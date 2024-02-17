@@ -1,7 +1,8 @@
 {
+    "layout": "theme2",
     "sections": {
         "template":{
-            "type": "contact"
+            "type": "contact_form"
         }
     },
     "order": ["template"]

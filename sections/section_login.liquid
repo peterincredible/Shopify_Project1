@@ -1,32 +1,16 @@
 <div class="shadow-2xl p-8 ">
-    <h1 class="mb-4 font-bold  text-2xl {{section.settings.header_aligment}}">CONTACT US</h1>
-    {% form 'contact' %}
+    <h1 class="mb-4 font-bold  text-2xl {{section.settings.header_aligment}}">LOGIN IN</h1>
+    {% form 'customer_login'%}
         <div class="">
-            {% comment %} {{ form.errors | default_errors }} {% endcomment %}
-            
+            {{ form.errors | default_errors }}
             <div class="contact_input_wrapper">
-                    <input class="contact_text_input" placeholder="First Name" name="contact[first_name]" id="first-name"/>
+                    <input class="contact_text_input" placeholder="Email" name="customer[email]" id="email" @keyup="console.log('input entered')"/>
             </div>
             <div class="contact_input_wrapper">
-                <input class="contact_text_input" placeholder="Last Name" name="contact[last_name]" id="last-name"/>
-            </div>
-            <div class="contact_input_wrapper">
-                    <input class="contact_text_input" placeholder="Email" name="contact[email]" id="email"/>
-
-                    {% if form.errors contains "email" %}
-                        <p class=" text-red-500">email is required</p>
-                    {% endif %}
-            </div>
-            
-            <div class="contact_input_wrapper">
-                    <input class="contact_text_input" placeholder="Phone" name="contact[phone]" id="last-name"/>
-            </div>
-                
-            <div class="contact_input_wrapper">
-                    <textarea class="contact_text_input" name="contact[body]" id="message">Message</textarea>
+                <input type="password" class="contact_text_input" placeholder="Enter Password" name="customer[password]" id="password"/>
             </div>
             <div class="contact_input_wrapper flex {{section.settings.submit_btn_aligment}}">
-                    <input type="submit"  class="bg-[#db4f66] text-white w-[200px] h-[60px]" value="SEND"/>
+                    <input type="submit"  class="bg-[#db4f66] text-white w-[200px] h-[60px]" value="Sign in"/>
             </div>
         </div>
     {%endform%}
@@ -35,7 +19,7 @@
 
 {% schema %}
 {
-    "name": "Contact Section",
+    "name": "Login Section",
     "settings": [
                     {
                         "type": "radio",

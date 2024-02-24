@@ -1,0 +1,9 @@
+{
+    "layout": "theme2",
+    "sections": {
+        "template_header":{
+            "type": "section_login"
+        }
+    },
+    "order": ["template_header"]
+}

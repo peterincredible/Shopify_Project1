@@ -1,0 +1,85 @@
+<div class="mx-auto max-w-[1200px]">
+    <h1 class=" my-14 font-bold  text-2xl {{section.settings.header_aligment}}">LATEST PRODUCTS</h1>
+    {% if section.settings.selected_collection %}
+        {% paginate collections[section.settings.selected_collection].products by section.settings.display_length %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-5">
+            
+                {% for product in collections[section.settings.selected_collection].products limit: section.settings.display_length%}
+                    {% comment %} <div class="product_box">
+                        <div class="duration_status">new</div>
+                        <div class="product_img_container">
+                            <div class="product_img_wrapper">
+                            <img src="{{product | img_url: 'large' }}" alt="cant display image" class="product_img"/>
+                            </div>
+                        </div>
+                        <p class="product_detail">
+                            <span>{{product.title | truncate: 15}}</span>
+                            <span>price:<span class=" text-red-500">{{shop.currency}}{{product.price}}</span></span>
+                        </p>
+                    </div> {% endcomment %}
+                    {% render "display_product" product:product%}
+                {% endfor %}
+                <!-- pagination -->
+                {% comment %} {{- paginate | default_pagination }} {% endcomment %}
+            </div>
+            <div class=" flex justify-center mt-3">
+                {% if paginate.previous %}
+                    <span class=""><a href="{{paginate.previous.url}}" class=" text-red-500">Previous</a></span>
+                {% endif %}
+                <span class="mx-2 inline-block">{{paginate.current_page}}</span>
+                {% if paginate.next %}
+                    <span ><a href="{{paginate.next.url}}" class=" text-red-500">Next</a></span>
+                {% endif %}      
+            </div>
+        {% endpaginate %}   
+       
+    {% endif %}t
+    
+    {% comment %} {% paginate collection.products by 5 %}
+        {% for product in collection.products -%}
+          {{ product.title }}
+        {%- endfor %}
+      
+        {{- paginate | default_pagination }}
+      {% endpaginate %} {% endcomment %}
+
+</div>
+{% schema %}
+{
+    "name": "product section",
+    "settings": [
+             {
+                "type": "collection",
+                "id": "selected_collection",
+                "label": "Select Collection"
+             },
+             {
+                "type": "number",
+                "id": "display_length",
+                "default": 20,
+                "label": "Display Length"
+             },
+
+             {
+                        "type": "radio",
+                        "id": "header_aligment",
+                        "label": "Header alignment",
+                        "options": [
+                            {
+                                "value": "text-left",
+                                "label": "left"
+                            },
+                            {
+                                "value": "text-center",
+                                "label": "center"
+                            },
+                            {
+                                "value": "text-right",
+                                "label": "right"
+                            }
+                        ],
+                        "default": "text-left"
+                    }
+        ]
+}
+{% endschema %}

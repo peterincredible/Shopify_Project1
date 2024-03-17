@@ -1,0 +1,12 @@
+<div class="product_box">
+    <div class="duration_status">new</div>
+    <div class="product_img_container">
+        <div class="product_img_wrapper">
+        <img src="{{product | img_url: 'large' }}" alt="cant display image" class="product_img"/>
+        </div>
+    </div>
+    <p class="product_detail">
+        <span>{{product.title | truncate: 15}}</span>
+        <span>price:<span class=" text-red-500">{{shop.currency}}{{product.price}}</span></span>
+    </p>
+</div>

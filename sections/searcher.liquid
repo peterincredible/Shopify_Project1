@@ -1,0 +1,13 @@
+<div class="w-full flex justify-center h-full items-center mb-6">
+    <div class="w-full max-w-[1200px]">
+        <form action="{{ routes.search_url }}" class="flex">
+                    <input class="contact_text_input" type="text"
+                        placeholder="Search"
+                        name="q"
+                        value="{{ search.terms | escape }}"
+                    >
+                    <input type="hidden" name="type" value="product">
+                    <input class="form_submit_btn"  type="submit" value="Search" >
+        </form>
+    </div>
+</div>

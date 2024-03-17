@@ -1,21 +1,29 @@
-<div class="shadow-2xl p-8 ">
-    <h1 class="mb-4 font-bold  text-2xl {{section.settings.header_aligment}}">LOGIN IN</h1>
-    {% form 'customer_login'%}
-        <div class="">
-            {{ form.errors | default_errors }}
-            <div class="contact_input_wrapper">
-                    <input class="contact_text_input" placeholder="Email" name="customer[email]" id="email" @keyup="console.log('input entered')"/>
-            </div>
-            <div class="contact_input_wrapper">
-                <input type="password" class="contact_text_input" placeholder="Enter Password" name="customer[password]" id="password"/>
-            </div>
-            <div class="contact_input_wrapper flex {{section.settings.submit_btn_aligment}}">
-                    <input type="submit"  class="bg-[#db4f66] text-white w-[200px] h-[60px]" value="Sign in"/>
-            </div>
+<style>
+    .shopify-section{
+         height: 100%;
+    }
+</style>
+<div class="w-full flex justify-center h-full items-center">
+    <div class="w-full max-w-[600px]">
+        <div class="shadow-2xl p-8 ">
+            <h1 class="mb-4 font-bold  text-2xl {{section.settings.header_aligment}}">LOGIN IN</h1>
+            {% form 'customer_login'%}
+                <div class="">
+                    {{ form.errors | default_errors }}
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Email" name="customer[email]" id="email" @keyup="console.log('input entered')"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <input type="password" class="contact_text_input" placeholder="Enter Password" name="customer[password]" id="password"/>
+                    </div>
+                    <div class="contact_input_wrapper flex {{section.settings.submit_btn_aligment}}">
+                            <input type="submit"  class="form_submit_btn" value="Sign in"/>
+                    </div>
+                </div>
+            {%endform%}
         </div>
-    {%endform%}
+    </div>
 </div>
-
 
 {% schema %}
 {

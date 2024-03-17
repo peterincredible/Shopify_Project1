@@ -1,0 +1,12 @@
+{
+    "layout": "theme2",
+    "sections": {
+        "search_input":{
+            "type": "searcher"
+        },
+        "search_result":{
+            "type": "section_search"
+        }
+    },
+    "order": ["search_input","search_result"]
+}

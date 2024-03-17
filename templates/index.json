@@ -2,7 +2,10 @@
     "sections": {
         "template_header":{
             "type": "section_header"
+        },
+        "template_products":{
+            "type": "section_products"
         }
     },
-    "order": ["template_header"]
+    "order": ["template_header","template_products"]
 }

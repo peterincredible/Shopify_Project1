@@ -1,0 +1,19 @@
+{
+    "layout": "theme2",
+    "sections": {
+        "search":{
+            "type": "searcher"
+        },
+      "product-grid": {
+        "type": "section_products",
+        "settings": {
+            "selected_collection":"All",
+            "display_length":20
+        }
+      }
+    },
+    "order": [
+        "search",
+        "product-grid"
+    ]
+  }

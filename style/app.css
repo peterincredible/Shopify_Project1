@@ -54,3 +54,30 @@ body{
 .contact_input_wrapper{
     @apply mb-4;
 }
+
+.duration_status{
+    background-color: #ffffff;
+    @apply absolute top-3 left-5 rounded-full p-3;
+}
+.product_box{
+    background-color: #eeeeee;
+    @apply relative h-96;
+}
+.product_img_container{
+    @apply h-[85%] px-2 flex justify-center items-center;
+}
+.product_detail{
+    @apply px-2 flex justify-between;
+}
+.product_img_wrapper{
+    @apply h-[200px] w-[200px];
+}
+.product_img{
+    @apply w-full h-full block;
+    mix-blend-mode: multiply;
+}
+
+.form_submit_btn{
+    @apply bg-[#db4f66] text-white w-[200px] h-[60px];
+}
+

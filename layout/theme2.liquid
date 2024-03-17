@@ -14,10 +14,15 @@
     <div class="layout-container flex flex-col">
         {% render "header2" %}
 
-        <div class="flex items-center justify-center grow md:min-h-[800px] my-5">
+        {% comment %} <div class="flex items-center justify-center grow md:min-h-[800px] my-5">
             <div class="w-full max-w-[600px]">
             {{ content_for_layout }}
             </div>
+        </div> {% endcomment %}
+        <div class="grow my-5">
+            {% comment %} <div class="w-full"> {% endcomment %}
+            {{ content_for_layout }}
+            {% comment %} </div> {% endcomment %}
         </div>
         {% render "footer" %}
         

@@ -1,0 +1,38 @@
+{% for block in section.blocks %}
+    {%- case block.type -%}
+      {%- when "product_img" -%}
+        <h1>{{ block.settings.heading }}</h1>
+    {% endcase %}
+{% endfor %}
+{% schema %}
+{
+  "name": "Product Detail",
+  "blocks": [
+    {
+      "type": "product_img",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "number",
+          "id": "img_no",
+          "label": "Number Of Images To Display",
+          "default": 4
+        }
+      ]
+    },
+    {
+        "type": "product_vo",
+        "name":"Product_vo",
+        "settings": [
+                {
+                    "type": "text",
+                    "default": "Variants",
+                    "id": "header_text",
+                    "label": "Header Text"
+                },
+                
+        ]
+    }
+  ]
+}
+{% endschema %}

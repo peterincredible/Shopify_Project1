@@ -6,7 +6,8 @@
         </div>
     </div>
     <p class="product_detail">
-        <span>{{product.title | truncate: 15}}</span>
+        <a href="{{product.url}}">{{product.title | truncate: 15}}</a>
+        {% comment %} <span>{{product.title | truncate: 15}}</span> {% endcomment %}
         <span>price:<span class=" text-red-500">{{shop.currency}}{{product.price}}</span></span>
     </p>
 </div>

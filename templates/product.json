@@ -1,0 +1,11 @@
+{
+    "layout": "theme2",
+    "sections": {
+         "product":{
+            "type": "section_product_detail"
+         }
+    },
+    "order": [
+        "product"
+    ]
+}

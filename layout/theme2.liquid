@@ -3,10 +3,11 @@
 <head>
     <title>Title of the document</title>
     {{"app.css" | asset_url | stylesheet_tag}}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% comment %} {{"https://kit.fontawesome.com/cd72f6eaef.js" | asset_url |  script_tag}} {% endcomment %}
      <script src="https://kit.fontawesome.com/cd72f6eaef.js" crossorigin="anonymous"></script>
     {{ content_for_header }}
-    {% comment %} <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script> {% endcomment %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
@@ -14,13 +15,13 @@
     <div class="layout-container flex flex-col">
         {% render "header2" %}
         <div class="grow my-5">
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
             {{ content_for_layout }}
         </div>
         {% render "footer" %}
         
     </div>
-    {% comment %} <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> {% endcomment %}
-    <script>console.log("end of the laout theme 2");</script>
+    <script>console.log("end of the laout theme 2 !!!!");</script>
     
 </body>
 </html>

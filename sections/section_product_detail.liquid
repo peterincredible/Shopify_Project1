@@ -1,38 +1,161 @@
-{% for block in section.blocks %}
-    {%- case block.type -%}
-      {%- when "product_img" -%}
-        <h1>{{ block.settings.heading }}</h1>
-    {% endcase %}
-{% endfor %}
+<div class="product_detail_img_container_carousel" x-data="swiper_data">
+  
+  <!---- this is where the carousel will sit -->
+          <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper !h-[90%]">
+              <!-- Slides -->
+              {% for image in product.images%}
+                  <div class="swiper-slide">
+                    <img src="{{image | img_url: 'large' }}" alt="cant display image" class="product_img"/>
+                  </div>
+              {% endfor %}
+            </div>
+            <!-- If we need navigation buttons -->
+            <div class="pagination_navigation_wrapper">
+              <div class="swiper-button-prev modify_navigation_btn" @click="prev"></div>
+              {% comment %} <i class="fa-solid fa-less-than"></i> {% endcomment %}
+               <span x-ref="swipper_index" class="navigation_index_display"></span>
+               {% comment %} <i class="fa-solid fa-greater-than"></i> {% endcomment %}
+              <div class="swiper-button-next modify_navigation_btn text-xs" @click="next"></div>
+            </div>
+           
+          
+            <!-- If we need scrollbar -->
+            {% comment %} <div class="swiper-scrollbar"></div> {% endcomment %}
+          </div>
+  <!-- end of this block -->
+</div>
+<div class=" product_detail_img_container bg-red-500 text-white p-2">
+     <div class=" h-[400px] bg-white mt-2">
+
+     </div>
+     <div class=" h-[400px] bg-green-500 mt-2">
+
+     </div>
+     <div class=" h-[400px] bg-purple-400 mt-2">
+        
+
+     </div>
+</div>
+<div class="product_detail_others_info_container">
+     <div class="sticky top-0 z-[1]">
+            <p class="product_vendor">{{product.vendor}}</p>
+            <h1 class=" text-3xl">{{product.title}}</h1>
+            <p  class="product_price"> {{product.price |  money_with_currency}}</p>
+            {% for product_option in product.options_with_values%}
+              {%- liquid
+                  assign swatch_count = product_option.values | map: 'name'
+                  echo swatch_count
+               %}
+      
+               {% comment %} <div>
+                  <p class="product_size">{{product_option.name}}</p>
+                  <div>
+                    {% for pov in product_option.values %}
+                      
+                        <span>{{pov.selected |json}}</span>
+                    {% endfor %}
+                  </div>
+                  
+
+               </div> {% endcomment %}
+            {% endfor %}
+            
+
+            {% comment %} {% for variant in product.variants %}
+                <span>{{variant.title}}</span>
+            {% endfor %} {% endcomment %}
+
+            {% comment %} {% assign current_variant = product.selected_or_first_available_variant %}
+            <p>{{current_variant.title}}</p>
+            <!-- Product price -->
+            <div class="price">
+              <span class="price-reg">{{ current_variant.price | money }}</span>
+
+              {% if current_variant.compare_at_price > current_variant.price %}
+                <span class="price-sale"><s>{{ current_variant.compare_at_price | money }}</s></span>
+              {% endif %} {% endcomment %}
+            </div>
+      </div>
+     
+
+</div>
+<script>
+        document.addEventListener('alpine:init', () => {
+          
+         Alpine.data('swiper_data', () => ({
+             open: false,
+             swipper:null,
+             swipper_index:null,
+             init() {
+              this.swipper = new Swiper('.swiper', 
+              {
+                            // Optional parameters
+                            direction: 'horizontal',
+                            loop: true,
+
+                            // If we need pagination
+                            pagination: {
+                              el: '.swiper-pagination',
+                            },
+
+                            // // Navigation arrows
+                            // navigation: {
+                            //   nextEl: '.swiper-button-next',
+                            //   prevEl: '.swiper-button-prev',
+                            // },
+
+                            // And if we need scrollbar
+                            // scrollbar: {
+                            //   el: '.swiper-scrollbar',
+                            // },
+                });
+
+                this.updateIndexDisplayNo();
+                  
+              },
+             updateIndexDisplayNo(){
+                this.$refs.swipper_index.innerText=this.swipper.realIndex+1+" / "+this.swipper.slides.length;
+             },
+             toggle() {
+                 console.log("toggle clicked hippi")
+                 this.next();
+             },
+             next(){
+              // console.log(this.$refs.swipper_index,"swiper index",this.swipper.activeIndex,this.swipper.slides.length)
+               this.swipper.slideNext(500,true)
+               this.updateIndexDisplayNo();
+             },
+             prev(){
+               
+               this.swipper.slidePrev(500,true)
+               this.updateIndexDisplayNo();
+             }
+
+         }))
+    })
+</script>
+</script>
 {% schema %}
+
 {
-  "name": "Product Detail",
-  "blocks": [
-    {
-      "type": "product_img",
-      "name": "Image",
+      "name": "Product Detail",
+      "class": "section_product_detail_wrapper",
       "settings": [
+
         {
           "type": "number",
           "id": "img_no",
           "label": "Number Of Images To Display",
           "default": 4
+        },
+        {
+            "type": "text",
+            "default": "Variants",
+            "id": "header_text",
+            "label": "Header Text"
         }
       ]
-    },
-    {
-        "type": "product_vo",
-        "name":"Product_vo",
-        "settings": [
-                {
-                    "type": "text",
-                    "default": "Variants",
-                    "id": "header_text",
-                    "label": "Header Text"
-                },
-                
-        ]
-    }
-  ]
 }
 {% endschema %}

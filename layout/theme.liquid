@@ -3,6 +3,7 @@
 <head>
     <title>Title of the document</title>
     {{"app.css" | asset_url | stylesheet_tag}}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% comment %} {{"https://kit.fontawesome.com/cd72f6eaef.js" | asset_url |  script_tag}} {% endcomment %}
      <script src="https://kit.fontawesome.com/cd72f6eaef.js" crossorigin="anonymous"></script>
     {{ content_for_header }}

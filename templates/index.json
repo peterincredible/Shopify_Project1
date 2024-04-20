@@ -4,7 +4,11 @@
             "type": "section_header"
         },
         "template_products":{
-            "type": "section_products"
+            "type": "section_products",
+            "settings": {
+                "selected_collection":"All",
+                "display_length":20
+            }
         }
     },
     "order": ["template_header","template_products"]

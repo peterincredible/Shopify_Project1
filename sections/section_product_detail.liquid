@@ -39,29 +39,41 @@
      </div>
 </div>
 <div class="product_detail_others_info_container">
-     <div class="sticky top-0 z-[1]">
+     <div class="sticky top-0 z-[1]" x-data="variantSelector">
             <p class="product_vendor">{{product.vendor}}</p>
             <h1 class=" text-3xl">{{product.title}}</h1>
             <p  class="product_price"> {{product.price |  money_with_currency}}</p>
-            {% for product_option in product.options_with_values%}
-              {%- liquid
-                  assign swatch_count = product_option.values | map: 'name'
-                  echo swatch_count
-               %}
-      
-               {% comment %} <div>
-                  <p class="product_size">{{product_option.name}}</p>
-                  <div>
-                    {% for pov in product_option.values %}
-                      
-                        <span>{{pov.selected |json}}</span>
-                    {% endfor %}
-                  </div>
-                  
-
-               </div> {% endcomment %}
-            {% endfor %}
-            
+            {% form 'product',product %}
+              {% assign current_selected_variant = product.selected_or_first_available_variant%}
+              {% comment %} {{current_selected_variant |  json}} {% endcomment %}
+              <input type="hidden" x-ref="variantSelector" data-variants="{{product.variants |  json }}"/>
+              {% for product_option in product.options_with_values%}
+                <div>
+                  {% assign product_option_loop_index = forloop.index0 %}
+                    <p class="product_size">{{product_option.name}} </p>
+                    <div class="variant_item_parent">
+                      {% for pov in product_option.values %}
+                        {% if pov == current_selected_variant.options[product_option_loop_index] %}
+                                <span class="variant_item variant_selected" @click="variantItemChanged">{{pov}}</span>
+                                {% else %}
+                                <span class="variant_item" @click="variantItemChanged">{{pov}}</span>
+                        {% endif %}
+                          
+                      {% endfor %}
+                    </div>
+                </div>
+              {% endfor %}
+              <div>
+                <p class="product_size">quantity </p>
+                <div>
+                  <button @click.prevent="quantityAdd">add</button>
+                  <input type="text" name="quantity" min="1" :value="quantity">
+                  {% comment %} <span ></span> {% endcomment %}
+                  <button @click.prevent="quantitySub">sub</button>
+                </div>
+              </div>
+            <input type="submit" value="Add to cart">
+          {% endform %}
 
             {% comment %} {% for variant in product.variants %}
                 <span>{{variant.title}}</span>
@@ -132,6 +144,92 @@
                this.swipper.slidePrev(500,true)
                this.updateIndexDisplayNo();
              }
+
+         }))
+
+         Alpine.data("variantSelector",()=>({
+          variantSelectorParsed:{{product.variants |  json }},
+          priceMoneyPrefix:"",
+          priceMoneyProfix:"",
+          quantity:1,
+          init(){
+             let priceElement = document.querySelector(".product_price");
+             this.priceMoneyPrefix = priceElement.innerText[0];
+             this.priceMoneyProfix = priceElement.innerText.split(" ")[1];
+             this.updateDeepLink();
+          },
+          getSelectedVariants(){
+                let selected_variants = [...document.querySelectorAll(".variant_selected")];
+                let result = selected_variants.map(data=>data.innerText).join(" / ");
+                // console.dir(result);
+               return this.findVariantIdByTitle(result);
+          },
+          findVariantIdByTitle(title=""){
+             return this.variantSelectorParsed.find((variant) => variant.title == title);
+          },
+          variantItemChanged(e){
+              let target = e.target;
+              let parent = target.parentElement
+              let siblings= [...parent.children].filter(child=>child !== target)
+              siblings.forEach(element => {
+                    element.classList.remove("variant_selected");
+              });
+              if(!target.classList.contains("variant_selected")){
+                  target.classList.add("variant_selected");
+              }
+              this.calculatePrice();
+              this.updateDeepLink();
+              // let variant = this.getSelectedVariants();
+
+              // if(variant){
+              //     console.log(variant.price,variant);
+              //     let price = parseFloat(variant.price).toFixed(2);
+              //     let priceElement = document.querySelector(".product_price");
+                  
+              //     priceElement.innerText=this.priceMoneyPrefix+price+" "+this.priceMoneyProfix;
+              // }
+
+          },
+          calculatePrice(){
+            let variant = this.getSelectedVariants();
+
+            if(variant){
+                console.log(variant.price,variant,this.quantity);
+                let price = parseFloat(variant.price * this.quantity).toFixed(2);
+                let priceElement = document.querySelector(".product_price");
+                
+                priceElement.innerText=this.priceMoneyPrefix+price+" "+this.priceMoneyProfix;
+            }
+          },
+          quantityAdd(e){
+            
+            this.quantity +=1;
+            this.calculatePrice();
+          },
+          quantitySub(){
+            this.quantity -=1
+            if(this.quantity < 1){
+              this.quantity = 1
+              
+            }
+            this.calculatePrice()
+          },
+          updateDeepLink(){
+            let variant = this.getSelectedVariants();
+            if (history.pushState) {
+                var href = window.location.protocol + "//" + window.location.host + window.location.pathname + '?variant='+variant.id;
+                // console.log(href);
+                window.history.pushState({path:href},'',href);
+              }
+
+            // let href = window.location.href;
+            // href = href.replace(/(?variant=)[^\&]+/, '$1' + variant.id);
+            // console.log("href",href);
+            //  console.log("clicked update deep link =>",variant)
+            // window.location.href = window.location.href.replace(/(?variant=)[^\&]+/, '$1' + variant.id);
+            // window.location.href = window.location.href+"?variant="+variant.id;
+            
+          }
 
          }))
     })

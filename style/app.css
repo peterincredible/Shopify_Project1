@@ -146,3 +146,17 @@ body{
   .product_detail_others_info_container .product_size{
     @apply mt-6;
   }
+  .variant_item{
+    border: 1px solid rgba(18,18,18,0.55);
+    color:rgb(18,18,18);
+    @apply py-1 px-5 mt-3 inline-block rounded-2xl;
+    transition:.25s all ease-in-out
+  }
+  .variant_item:hover{
+    border-color: rgb(18,18,18);
+    cursor: pointer;
+  }
+  .variant_item.variant_selected{
+    background-color: rgb(18,18,18);
+    color:rgb(255,255,255);
+  }

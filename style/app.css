@@ -78,16 +78,57 @@ body{
     mix-blend-mode: multiply;
 }
 
+.product_img2,.product_img2_first{
+    @apply product_img;
+    
+}
+.product_img2_first{
+   width: 45vw;
+   max-width: 700px;
+   height: 35vw;
+   max-height: 600px;
+   /* height: 600px; */
+   /* width: 100%; */
+   border:1px solid #f3ecece1;
+}
+.product_img2_wrapper{
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    @apply mt-3;
+    column-gap: 5px;
+    row-gap: 5px;
+    /* justify-content: space-between; */
+}
+.product_img2_items{
+    /* @apply md:w-[350px] */
+    /* border:1px solid #121212bf; */
+    border:1px solid #f3ecece1;
+    @apply w-[45vw] h-[35vw] min-[1000px]:w-[22.2vw] min-[1000px]:h-[30vw] min-[1550px]:max-w-[347px];
+    
+    /* max-width: 347px; */
+    /* width: 45vw; */
+    /* height: 35vw; */
+    max-height: 400px;
+    /* min-width: 300px; */
+    /* height: 300px */
+    /* width: 100%; */
+}
+.product_img2{
+   
+}
+
 .form_submit_btn{
     @apply bg-[#db4f66] text-white w-[200px] h-[60px];
 }
 
 .section_product_detail_wrapper{
-    @apply grid md:grid-cols-8 md:gap-x-16;
+    @apply grid md:grid-cols-8 md:gap-x-16 md:max-w-[1200px] md:mx-auto;
 }
 /* .idea_test1{
     @apply col-span-5 md:h-[1200px];
-}
+}1250
 .idea_test2{
     @apply col-span-3 md:h-[1200px]
 } */
@@ -98,10 +139,10 @@ body{
     height: 70vw;
 }
 .product_detail_img_container{
-    @apply hidden md:block md:col-span-6;
+    @apply hidden md:block md:col-span-5;
 }
 .product_detail_others_info_container{
-    @apply md:col-span-2;
+    @apply md:col-span-3;
 }
 .swiper {
     /* width:100%;
@@ -159,4 +200,32 @@ body{
   .variant_item.variant_selected{
     background-color: rgb(18,18,18);
     color:rgb(255,255,255);
+  }
+  .quantity_controller_wrapper{
+    border: 1px solid rgba(18,18,18,0.55);
+    @apply flex items-center justify-between p-2 w-[150px] mt-3
+  }
+  
+  .qantity_control_btn,.qantity_input{
+      color: rgba(18,18,18,0.55);
+      width: 33%;
+      @apply block;
+  }
+
+  .qantity_input{
+    color:#121212;
+    @apply text-center focus-visible:outline-0;
+    
+  }
+
+  .add_to_cart{
+    border: 1px solid rgba(18,18,18,0.55);
+    color:#121212;
+    @apply p-3 block w-full mt-5 text-center ;
+  }
+  .product_decription{
+    color:rgba(18,18,18,0.75);
+    line-height: 1.8rem;
+
+    @apply mt-4 text-base;
   }

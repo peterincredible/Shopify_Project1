@@ -26,8 +26,8 @@
           </div>
   <!-- end of this block -->
 </div>
-<div class=" product_detail_img_container bg-red-500 text-white p-2">
-     <div class=" h-[400px] bg-white mt-2">
+<div class=" product_detail_img_container text-white p-2">
+     {% comment %} <div class=" h-[400px] bg-white mt-2">
 
      </div>
      <div class=" h-[400px] bg-green-500 mt-2">
@@ -36,7 +36,22 @@
      <div class=" h-[400px] bg-purple-400 mt-2">
         
 
-     </div>
+     </div> {% endcomment %}
+     {% assign first_product_image = product.images | first %}
+      <div class="">
+        <img src="{{first_product_image | img_url: 'large' }}" alt="cant display image" class="product_img2_first"/>
+      </div>
+      {% comment %} {% assign other_product_images = product.images | slice 1%} {% endcomment %}
+      <div class="product_img2_wrapper">
+        {% for image in product.images %}
+          {% if forloop.index0 != 0 %}
+            <div class="product_img2_items">
+              <img src="{{image | img_url: 'large' }}" alt="cant display image" class="product_img2"/>
+            </div>
+          {% endif %}
+    {% endfor %}
+      </div>
+     
 </div>
 <div class="product_detail_others_info_container">
      <div class="sticky top-0 z-[1]" x-data="variantSelector">
@@ -65,33 +80,24 @@
               {% endfor %}
               <div>
                 <p class="product_size">quantity </p>
-                <div>
-                  <button @click.prevent="quantityAdd">add</button>
-                  <input type="text" name="quantity" min="1" :value="quantity">
+                <div class="quantity_controller_wrapper">
+                  <button @click.prevent="quantityAdd" class="qantity_control_btn">
+                    <i class="fa-solid fa-plus"></i>
+                  </button>
+                  <input type="text" name="quantity" min="1" :value="quantity" class="qantity_input">
                   {% comment %} <span ></span> {% endcomment %}
-                  <button @click.prevent="quantitySub">sub</button>
+                  <button @click.prevent="quantitySub" class="qantity_control_btn">
+                    <i class="fa-solid fa-minus"></i>
+                  </button>
                 </div>
               </div>
-            <input type="submit" value="Add to cart">
-          {% endform %}
-
-            {% comment %} {% for variant in product.variants %}
-                <span>{{variant.title}}</span>
-            {% endfor %} {% endcomment %}
-
-            {% comment %} {% assign current_variant = product.selected_or_first_available_variant %}
-            <p>{{current_variant.title}}</p>
-            <!-- Product price -->
-            <div class="price">
-              <span class="price-reg">{{ current_variant.price | money }}</span>
-
-              {% if current_variant.compare_at_price > current_variant.price %}
-                <span class="price-sale"><s>{{ current_variant.compare_at_price | money }}</s></span>
-              {% endif %} {% endcomment %}
-            </div>
+              <button type="submit" class="add_to_cart" >Add to cart</button>
+            {% comment %} <input type="submit" class="add_to_cart" value="> {% endcomment %}
+            {% endform %}
+            <p class="product_decription">
+              {{product.description}}
+            </p>
       </div>
-     
-
 </div>
 <script>
         document.addEventListener('alpine:init', () => {

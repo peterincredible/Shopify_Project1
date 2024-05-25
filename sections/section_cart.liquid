@@ -1,0 +1,101 @@
+<div>
+    <div>
+        <h2>our Cart</h2>
+        <a href="{{routes.collections_url}}/all">Continue Shopping</a>
+    </div>
+    <form action="{{ routes.cart_url }}" method="post">
+        {% for item in cart.items %}
+            <div x-data="cart_item" data-test="{{item.title}}">
+                <div><span>{{item.title}}</span></div>
+                {% comment %} <div><span class="ml-3">{{item.quantity}}</span></div> {% endcomment %}
+                <div class="flex justify-between items-center">
+                    <div class="quantity_controller_wrapper">
+                    <button class="qantity_control_btn" @click.prevent="addQuantity">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <input type="text" name="quantity" min="1" name="updates[]" value="{{item.quantity}}"   class="qantity_input">
+                    {% comment %} <span ></span> {% endcomment %}
+                    <button  class="qantity_control_btn" @click.prevent="subQuantity">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                    </div>
+                    <a href="{{ item.url_to_remove }}"><i class="fa-solid fa-trash"></i></a>
+                    <div>
+                        <i x-show.important="showLoader" class="fa-solid fa-rotate-right fa-spin"></i>
+                        <span x-show.important="!showLoader" class="price_data" data-price="{{item.product.price | money}}">{{item.original_price | money}}</span>
+                    </div>
+                    
+                </div>
+                </div>
+                {% comment %} <template x-show="showLoader"> {% endcomment %}
+                    
+                {% comment %} </template> {% endcomment %}
+                {% comment %} <template x-show="!showLoader"> {% endcomment %}
+                    
+                {% comment %} </template> {% endcomment %}
+                
+            {% comment %} {{item |  json}} {% endcomment %}
+            <!-- line item info -->
+        {% endfor %}
+
+        <input type="submit" name="checkout" class="checkout_btn" value="Check out">
+    </form>
+</div>
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('cart_item', () => ({
+            quantity_input_element:null,
+            add_quantity_element:null,
+            sub_quantity_element:null,
+            priceMoneyPrefix:"",
+            price:0,
+            price_data:null,
+            showLoader:false,
+            init(){
+                this.quantity_input_element = this.$el.querySelector(".qantity_input");
+                this.price_data = this.$el.querySelector(".price_data");
+                let temp = this.price_data.dataset.price
+                temp = temp.slice(1,temp.length);
+                this.price = parseFloat(temp);
+                this.priceMoneyPrefix = this.price_data.innerText[0];
+                let quantity = this.quantity_input_element.value;
+                let value = `${this.priceMoneyPrefix}${this.price * quantity}`;
+                this.price_data.innerText = value;
+
+                // console.log(this.quantity_input_element.value);
+                // console.log(this.$el.dataset.test);
+            },
+            addQuantity(){
+                 let quantity = parseInt(this.quantity_input_element.value)
+                 quantity +=1;
+                 this.quantity_input_element.value=quantity;
+                 let value = `${this.priceMoneyPrefix}${this.price * quantity}`;
+                 this.showLoader=true;
+                 setTimeout(()=>{
+                    this.price_data.innerText = value;
+                    this.showLoader=false;
+                 },"500")
+                //  console.log(value);
+                //  this.price_data.innerText = `${this.priceMoneyPrefix} ${this.price * quantity}`;
+            },
+            subQuantity(){
+                let quantity = parseInt(this.quantity_input_element.value);
+                 quantity -=1;
+                 if(quantity <= 0){
+                    quantity = 1;
+                 }
+                 this.quantity_input_element.value=quantity;
+                 let value = `${this.priceMoneyPrefix}${this.price * quantity}`;
+                 this.showLoader=true;
+                 setTimeout(()=>{
+                    
+                    this.price_data.innerText = value;
+                    this.showLoader=false;
+                 },"500")
+
+                //  console.log(value);
+                 
+            },
+        }))
+    })
+</script>

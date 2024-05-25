@@ -223,6 +223,12 @@ body{
     color:#121212;
     @apply p-3 block w-full mt-5 text-center ;
   }
+  .checkout_btn{
+    border: 1px solid rgba(18,18,18,0.55);
+    color:#121212;
+    min-width: 150px;
+    @apply p-3 block mt-5 text-center ;
+  }
   .product_decription{
     color:rgba(18,18,18,0.75);
     line-height: 1.8rem;

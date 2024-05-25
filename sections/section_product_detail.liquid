@@ -60,8 +60,11 @@
             <p  class="product_price"> {{product.price |  money_with_currency}}</p>
             {% form 'product',product %}
               {% assign current_selected_variant = product.selected_or_first_available_variant%}
+
               {% comment %} {{current_selected_variant |  json}} {% endcomment %}
               <input type="hidden" x-ref="variantSelector" data-variants="{{product.variants |  json }}"/>
+              {% comment %} {{current_selected_variant |  json}} {% endcomment %}
+              <input type="hidden" name="id" x-ref="variant_id" value="{{current_selected_variant.id}}"/>
               {% for product_option in product.options_with_values%}
                 <div>
                   {% assign product_option_loop_index = forloop.index0 %}
@@ -227,6 +230,7 @@
                 // console.log(href);
                 window.history.pushState({path:href},'',href);
               }
+              this.$refs.variant_id.value = variant.id;
 
             // let href = window.location.href;
             // href = href.replace(/(?variant=)[^\&]+/, '$1' + variant.id);

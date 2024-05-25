@@ -1,0 +1,10 @@
+{
+    "layout": "theme2",
+    "name": "Cart Page",
+    "sections": {
+        "cart":{
+            "type": "section_cart"
+        }
+    },
+    "order": ["cart"]
+}

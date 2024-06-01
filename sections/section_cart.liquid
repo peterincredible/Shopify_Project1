@@ -1,31 +1,51 @@
 <div>
-    <div>
-        <h2>our Cart</h2>
+    <div class=" flex justify-between">
+        <h2>Your Cart</h2>
         <a href="{{routes.collections_url}}/all">Continue Shopping</a>
+    </div>
+    <div class="cart_header">
+        <p class="cart_header_product_item">Product</p>
+        <p class="cart_header_quantity_item">Qantity</p>
+        <p class="cart_header_total_item">Total</p>
     </div>
     <form action="{{ routes.cart_url }}" method="post">
         {% for item in cart.items %}
-            <div x-data="cart_item" data-test="{{item.title}}">
-                <div><span>{{item.title}}</span></div>
-                {% comment %} <div><span class="ml-3">{{item.quantity}}</span></div> {% endcomment %}
-                <div class="flex justify-between items-center">
-                    <div class="quantity_controller_wrapper">
-                    <button class="qantity_control_btn" @click.prevent="addQuantity">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                    <input type="text" name="quantity" min="1" name="updates[]" value="{{item.quantity}}"   class="qantity_input">
-                    {% comment %} <span ></span> {% endcomment %}
-                    <button  class="qantity_control_btn" @click.prevent="subQuantity">
-                        <i class="fa-solid fa-minus"></i>
-                    </button>
-                    </div>
-                    <a href="{{ item.url_to_remove }}"><i class="fa-solid fa-trash"></i></a>
-                    <div>
-                        <i x-show.important="showLoader" class="fa-solid fa-rotate-right fa-spin"></i>
-                        <span x-show.important="!showLoader" class="price_data" data-price="{{item.product.price | money}}">{{item.original_price | money}}</span>
-                    </div>
-                    
+            <div x-data="cart_item" data-test="{{item.title}}" class="cart_main_wrapper">
+                <div class="cart_product_img">
+                     <div class="cart_product_img_wrapper">
+
+                     </div>
                 </div>
+
+                <div class="cart_product_detail">
+                        <div class="cart_product_description">
+                                <p>{{item.product.title}}</p>
+                                {% for selected_variant in item.options_with_values %}
+                                        {% comment %} {{selected_variant | json}} {% endcomment %}
+                                    <p><span>{{selected_variant.name}}</span>:<span>{{selected_variant.value}}</span></p>
+                                {% endfor %}
+                        </div>
+                        <div class="cart_product_quantity">
+                            <div class="quantity_controller_wrapper">
+                            <button class="qantity_control_btn" @click.prevent="addQuantity">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <input type="text" name="quantity" min="1" name="updates[]" value="{{item.quantity}}"   class="qantity_input">
+                            {% comment %} <span ></span> {% endcomment %}
+                            <button  class="qantity_control_btn" @click.prevent="subQuantity">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            </div>
+                            <a href="{{ item.url_to_remove }}"><i class="fa-solid fa-trash"></i></a>   
+                        </div>
+                </div>
+                
+               
+                <div class="cart_total">
+                    <i x-show.important="showLoader" class="fa-solid fa-rotate-right fa-spin"></i>
+                    <span x-show.important="!showLoader" class="price_data" data-price="{{item.product.price | money}}">{{item.original_price | money}}</span>
+                </div>
+
                 </div>
                 {% comment %} <template x-show="showLoader"> {% endcomment %}
                     
@@ -37,8 +57,11 @@
             {% comment %} {{item |  json}} {% endcomment %}
             <!-- line item info -->
         {% endfor %}
-
-        <input type="submit" name="checkout" class="checkout_btn" value="Check out">
+         <div x-data="totalSum">
+            <p  x-ref="total_p" @reload_cart_total.window="getSum">{{cart.total_price |  money}}</p>
+            <input type="submit" name="checkout" class="checkout_btn" value="Check out">
+         </div>
+        
     </form>
 </div>
 <script>
@@ -74,6 +97,7 @@
                  setTimeout(()=>{
                     this.price_data.innerText = value;
                     this.showLoader=false;
+                    this.$dispatch("reload_cart_total",this.priceMoneyPrefix);
                  },"500")
                 //  console.log(value);
                 //  this.price_data.innerText = `${this.priceMoneyPrefix} ${this.price * quantity}`;
@@ -91,11 +115,46 @@
                     
                     this.price_data.innerText = value;
                     this.showLoader=false;
+                    this.$dispatch("reload_cart_total",this.priceMoneyPrefix);
                  },"500")
 
                 //  console.log(value);
                  
             },
         }))
+
+        Alpine.data('totalSum',()=>({
+            commafy(data){
+                return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            },
+            getSum(e){
+                //parseFloat('100,000.00'.replace(/,/g, ''))
+                let price_datas = document.querySelectorAll('.price_data');
+                let price_holder_total = 0
+                // let prices =  temp = temp.slice(1,temp.length);
+                // this.price = parseFloat(temp);
+                for(let price_data of price_datas){
+                    let temp = price_data.innerText;
+                    let price = temp.slice(1,temp.length);
+                    price = parseFloat(price.replace(/,/g,''));
+                    price_holder_total +=price;
+                    // console.log(price);
+                }
+                // console.dir(price_data)
+                let element = this.$refs.total_p;
+                element.innerText=`${e.detail}${this.commafy(price_holder_total)}`;
+                console.log(this);
+                
+            }
+        }))
     })
 </script>
+{% schema %}
+{
+    "name": "CartSchema",
+    "class": "cart_section_class",
+    "settings": [
+        
+        ]
+}
+{% endschema %}

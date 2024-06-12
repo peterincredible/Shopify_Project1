@@ -227,7 +227,7 @@ body{
     border: 1px solid rgba(18,18,18,0.55);
     color:#121212;
     min-width: 150px;
-    @apply p-3 block mt-5 text-center ;
+    @apply p-3 block mt-5 text-center w-full;
   }
   .product_decription{
     color:rgba(18,18,18,0.75);
@@ -240,6 +240,12 @@ body{
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+  }
+  .cart_header_font{
+    color: rgba(18,18,18,0.75);
+    font-size: 13px;
+    @apply my-5 py-5;
+    border-bottom: 1px solid rgba(18,18,18, 0.08);
   }
   .cart_header{
     @apply grid grid-cols-6 md:grid-cols-8;
@@ -256,7 +262,7 @@ body{
 
 
 .cart_main_wrapper{
-     @apply cart_header;
+     @apply cart_header my-10;
   }
 
 .cart_product_img{
@@ -269,7 +275,8 @@ body{
   max-height: 95.3px;
   min-width: 58px;
   min-height: 58px;
-  background-color: red;
+  border:1px solid rgba(18,18,18, 0.05);
+  /* background-color: red; */
 }
 
 .cart_product_detail{
@@ -279,14 +286,60 @@ body{
   @apply md:col-span-4;
 }
 .cart_product_quantity{
-  @apply flex  items-center md:col-span-2;
+  @apply flex  items-start md:col-span-2;
 }
 
 
 .cart_total{
   @apply text-right
 }
+.checkout_btn_container{
+  @apply flex justify-center md:justify-end mt-4
+}
+.total_estimate_placeholder{
+  color:rgb(18,18,18);
+  font-size:15px;
+}
+.cart_total_amount{
+  color:rgba(18,18,18, 0.75);
+  /* font-size: 1.8rem; */
+}
+.price_data{
+  color:rgb(18,18,18);
+  font-size: 15.5px;
+}
+.cart_product_title{
+  font-family: Assistant, sans-serif;
+  font-weight: 400;
+}
+.cart_selected_variant{
+  color:rgba(18,18,18, 0.75);
+  @apply mt-2;
+}
 
+.cart_header_h2{
+  color:rgb(18,18,18);
+  font-size: 18px;
+  font-family: 'Assistant',sans-serif;
+}
+.account_section_class{
+    
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.account_detail_header_wrapper{
+ 
+}
+.account_detail_wrapper{
+    @apply block md:grid md:grid-cols-9 gap-2;  
+}
+.order_detail_wrapper{
+    @apply block md:col-span-6 bg-red-500;
+}
+.address_detail_wrapper{
+    @apply block md:col-span-3 bg-red-500;
+}
   /* .cart_header{
      @apply grid grid-cols-6 md:grid-cols-8
   }

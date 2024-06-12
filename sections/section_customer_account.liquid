@@ -1,0 +1,61 @@
+<div>
+    <div class="account_detail_header_wrapper">
+        <h1>Account</h1>
+        <a class="text-gray-500 transition hover:text-gray-500/75 mnavbar_link flex header_icon_color" href="{{routes.account_logout_url}}">
+            Log out
+        </a>
+    </div>
+    <div class="account_detail_wrapper">
+        <div class="order_detail_wrapper">
+            <h2>Order history</h2>
+            {% if customer.orders_count %}
+                <table class=" w-full">
+                    <thead>
+                        <tr class="">
+                            <th class=" p-3">ORDER</th>
+                            <th class=" p-3">DATE</th>
+                            <th class=" p-3">PAYMENT STATUS</th>
+                            <th class=" p-3">FULFILLMENT STATUS</th>
+                            <th class=" p-3">TOTAL</th>
+                        </tr>
+                    </thead>
+                
+                {% for order in customer.orders %}
+                    <tr>
+                        <td>{{order.order_number}}</td>
+                        <td>{{order.created_at |  date: "%B %e, %Y"}}</td>
+                        <td>{{order.financial_status}}</td>
+                        <td>{{order.fulfillment_status}}</td>
+                        <td>{{order.total_price | money_with_currency}}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            {% endif %}
+            
+        </div>
+        <div class="address_detail_wrapper">
+            <h2>Address detail</h2>
+            <div>
+                <p>{{customer.default_address.first_name}} {{customer.default_address.last_name}}</p>
+                {% if customer.default_address.address1 %}
+                    <p>{{customer.default_address.address1 }}</p>
+                    {% elsif customer.default_address.address2%}
+                        <p>{{customer.default_address.address2}}</p>
+                {% endif %}
+                <p>{{ customer.default_address.city}} {{ customer.default_address.province_code}}</p>
+                <p>{{ customer.default_address.country}}</p>
+                <p>View addresses ({{customer.addresses_count}})</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% schema %}
+{
+    "name": "Account Section",
+    "class": "account_section_class",
+    "settings": [
+        ]
+}
+{% endschema %}

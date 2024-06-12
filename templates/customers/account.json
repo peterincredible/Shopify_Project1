@@ -1,0 +1,9 @@
+{
+    "layout": "theme2",
+    "sections": {
+        "template_customer_account":{
+            "type": "section_customer_account"
+        }
+    },
+    "order": ["template_customer_account"]
+}

@@ -1,9 +1,9 @@
 <div>
     <div class=" flex justify-between">
-        <h2>Your Cart</h2>
+        <h2 class="cart_header_h2">Your Cart</h2>
         <a href="{{routes.collections_url}}/all">Continue Shopping</a>
     </div>
-    <div class="cart_header">
+    <div class="cart_header cart_header_font">
         <p class="cart_header_product_item">Product</p>
         <p class="cart_header_quantity_item">Qantity</p>
         <p class="cart_header_total_item">Total</p>
@@ -13,16 +13,16 @@
             <div x-data="cart_item" data-test="{{item.title}}" class="cart_main_wrapper">
                 <div class="cart_product_img">
                      <div class="cart_product_img_wrapper">
-
+                        <img src="{{item.product | img_url: 'large' }}" alt="cant display image" class="product_img"/>
                      </div>
                 </div>
 
                 <div class="cart_product_detail">
                         <div class="cart_product_description">
-                                <p>{{item.product.title}}</p>
+                                <p class="cart_product_title">{{item.product.title}}</p>
                                 {% for selected_variant in item.options_with_values %}
                                         {% comment %} {{selected_variant | json}} {% endcomment %}
-                                    <p><span>{{selected_variant.name}}</span>:<span>{{selected_variant.value}}</span></p>
+                                    <p class="cart_selected_variant"><span>{{selected_variant.name}}</span>:<span>{{selected_variant.value}}</span></p>
                                 {% endfor %}
                         </div>
                         <div class="cart_product_quantity">
@@ -36,7 +36,7 @@
                                 <i class="fa-solid fa-minus"></i>
                             </button>
                             </div>
-                            <a href="{{ item.url_to_remove }}"><i class="fa-solid fa-trash"></i></a>   
+                            <a href="{{ item.url_to_remove }}" style="margin-top: 10px;"><i class="fa-solid fa-trash"></i></a>   
                         </div>
                 </div>
                 
@@ -57,9 +57,18 @@
             {% comment %} {{item |  json}} {% endcomment %}
             <!-- line item info -->
         {% endfor %}
-         <div x-data="totalSum">
-            <p  x-ref="total_p" @reload_cart_total.window="getSum">{{cart.total_price |  money}}</p>
-            <input type="submit" name="checkout" class="checkout_btn" value="Check out">
+         <div x-data="totalSum" class="checkout_btn_container">
+            {% comment %} <p  x-ref="total_p" @reload_cart_total.window="getSum">{{cart.total_price |  money}}</p> {% endcomment %}
+            <div>
+
+                <p>
+                    <span class=" total_estimate_placeholder mr-4">Estimated total</span>
+                    <span x-ref="total_p" @reload_cart_total.window="getSum" class="cart_total_amount">{{cart.total_price |  money}}</span>
+                </p>
+                
+                <input type="submit" name="checkout" class="checkout_btn" value="Check out">
+
+            </div>
          </div>
         
     </form>

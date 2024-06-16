@@ -1,0 +1,9 @@
+{
+    "layout": "theme2",
+    "sections": {
+        "template_customer_addresses":{
+            "type": "section_customer_addresses"
+        }
+    },
+    "order": ["template_customer_addresses"]
+}

@@ -1,8 +1,8 @@
 <div>
     <div class="account_detail_header_wrapper">
         <h1>Account</h1>
-        <a class="text-gray-500 transition hover:text-gray-500/75 mnavbar_link flex header_icon_color" href="{{routes.account_logout_url}}">
-            Log out
+        <a class="text-gray-500 transition hover:text-gray-500/75 mnavbar_link flex header_icon_color text-center" href="{{routes.account_logout_url}} ">
+        <i class="fa-solid fa-user"></i> <span class="ml-3 logout_span">Log out</span>
         </a>
     </div>
     <div class="account_detail_wrapper">
@@ -12,22 +12,22 @@
                 <table class=" w-full">
                     <thead>
                         <tr class="">
-                            <th class=" p-3">ORDER</th>
-                            <th class=" p-3">DATE</th>
-                            <th class=" p-3">PAYMENT STATUS</th>
-                            <th class=" p-3">FULFILLMENT STATUS</th>
-                            <th class=" p-3">TOTAL</th>
+                            <th class=" p-3 py-6">ORDER</th>
+                            <th class=" p-3 py-6">DATE</th>
+                            <th class=" p-3 py-6">PAYMENT STATUS</th>
+                            <th class=" p-3 py-6">FULFILLMENT STATUS</th>
+                            <th class=" p-3 py-6">TOTAL</th>
                         </tr>
                     </thead>
                 
                 {% for order in customer.orders %}
                     <tr>
-                        <td>{{order.order_number}}</td>
-                        <td>{{order.created_at |  date: "%B %e, %Y"}}</td>
-                        <td>{{order.financial_status}}</td>
-                        <td>{{order.fulfillment_status}}</td>
-                        <td>{{order.total_price | money_with_currency}}</td>
-                    </tr>
+                        <td class=" p-3 py-6">#{{order.order_number}}</td>
+                        <td class=" p-3 py-6">{{order.created_at |  date: "%B %e, %Y"}}</td>
+                        <td class=" p-3 py-6">{{order.financial_status}}</td>
+                        <td class=" p-3 py-6">{{order.fulfillment_status}}</td>
+                        <td class=" p-3 py-6">{{order.total_price | money_with_currency}}</td>
+                    </tr> 
                 {% endfor %}
                 </table>
             {% endif %}
@@ -36,15 +36,17 @@
         <div class="address_detail_wrapper">
             <h2>Address detail</h2>
             <div>
-                <p>{{customer.default_address.first_name}} {{customer.default_address.last_name}}</p>
+                <p> {{customer.default_address.first_name}} {{customer.default_address.last_name}}</p>
                 {% if customer.default_address.address1 %}
-                    <p>{{customer.default_address.address1 }}</p>
+                    <p class=" mt-2">{{customer.default_address.address1 }}</p>
                     {% elsif customer.default_address.address2%}
-                        <p>{{customer.default_address.address2}}</p>
+                        <p class=" mt-2">{{customer.default_address.address2}}</p>
                 {% endif %}
-                <p>{{ customer.default_address.city}} {{ customer.default_address.province_code}}</p>
-                <p>{{ customer.default_address.country}}</p>
-                <p>View addresses ({{customer.addresses_count}})</p>
+                <p class=" mt-2">{{ customer.default_address.city}} {{ customer.default_address.province_code}}</p>
+                <p class=" mt-2">{{ customer.default_address.country}}</p>
+                <a href="{{routes.account_addresses_url}}" class="block mt-6 underline font-assistant transition ease-in-out hover:font-semibold hover:cursor-pointer">
+                        View addresses ({{customer.addresses_count}})
+                </a>
             </div>
         </div>
     </div>

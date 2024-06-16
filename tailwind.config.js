@@ -10,7 +10,12 @@ module.exports = {
 
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        "tiny":[ "Tiny5", 'sans-serif'],
+        "assistant":["Assistant", 'sans-serif']
+      }
+    },
   },
   plugins: [],
 }

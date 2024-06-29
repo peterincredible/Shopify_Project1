@@ -3,7 +3,7 @@
     <a href="{{routes.account_url}}" class=" mt-4 block text-center font-assistant underline underline-offset-2"> Return to Account Details</a>
     <div x-data="new_address_component">
         <div class="flex justify-center"><button class=""  @click="toggle">Add a new Address</button></div>
-        <div x-show="open">
+        <div x-cloak x-show="open">
             <h2 class="mb-4">New Address</h2>
             {%  form 'customer_address', customer.new_address  %}
                     {{ form.errors | default_errors }}
@@ -79,7 +79,7 @@
                     <button type="submit" class="">delete</button>
                 </form>
             </div>
-            <div x-show="open">
+            <div x-cloak x-show="open">
                 {% form 'customer_address', address %}
                     {{ form.errors | default_errors }}
                     <div class="contact_input_wrapper">
@@ -161,6 +161,10 @@
                 */
                 console.log('new_address_component hit',this.province_array);
                 let el_c = this.$el.querySelector(".el_country");
+                let el_p = this.$el.querySelector(".el_province");
+                if(!el_p.classList.contains("hidden")){
+                    el_p.classList.add("hidden");
+                }
                 // selected_country = el_c.querySelector(`option[value="${el_c.dataset.default}"]`);
                 // selected_country.selected = true;
 
@@ -190,6 +194,17 @@
                     let el_p = component.querySelector(".el_province");
                     
                     el_p.replaceChildren();
+                    let province_length = provinces.length;
+                    if(province_length){
+                        if(el_p.classList.contains("hidden")){
+                            el_p.classList.remove("hidden");
+                        }
+
+                    }else{
+                        if(!el_p.classList.contains("hidden")){
+                            el_p.classList.add("hidden");
+                        }
+                    }
                     const fragment = new DocumentFragment();
                     for (const province of provinces) {
                         const option = document.createElement("option");
@@ -240,6 +255,17 @@
 
                 let el_p = this.$el.querySelector(".el_province");
                 let provinces = JSON.parse(selected_country.dataset.provinces);
+                let province_length = provinces.length;
+                    if(province_length){
+                        if(el_p.classList.contains("hidden")){
+                            el_p.classList.remove("hidden");
+                        }
+
+                    }else{
+                        if(!el_p.classList.contains("hidden")){
+                            el_p.classList.add("hidden");
+                        }
+                    }
                 
                 const fragment = new DocumentFragment();
                 for (const province of provinces) {
@@ -253,7 +279,6 @@
 
                 el_p.append(fragment);
                 
-                console.log(el_c,"el_c");
                 let temp_province_array = this.province_array;
                 let component = this.$el;
                 el_c.addEventListener("change",function(e){
@@ -264,6 +289,17 @@
                     let el_p = component.querySelector(".el_province");
                     
                     el_p.replaceChildren();
+                    let province_length = provinces.length;
+                    if(province_length){
+                        if(el_p.classList.contains("hidden")){
+                            el_p.classList.remove("hidden");
+                        }
+
+                    }else{
+                        if(!el_p.classList.contains("hidden")){
+                            el_p.classList.add("hidden");
+                        }
+                    }
                     const fragment = new DocumentFragment();
                     for (const province of provinces) {
                         const option = document.createElement("option");

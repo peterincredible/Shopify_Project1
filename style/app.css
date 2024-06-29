@@ -8,7 +8,7 @@
 html,body,.layout-container,#shopify-section-template--17339922088178__template{
     @apply h-full;
 }
-
+[x-cloak] { display: none !important; }
 .layout-container{
     @apply mx-auto px-2 sm:px-4 lg:px-12;
 }

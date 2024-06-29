@@ -1,1 +1,311 @@
-<h2>Address page</h2>
+<div>
+    <h2 class="text-center font-assistant text-4xl">Address page</h2>
+    <a href="{{routes.account_url}}" class=" mt-4 block text-center font-assistant underline underline-offset-2"> Return to Account Details</a>
+    <div x-data="new_address_component">
+        <div class="flex justify-center"><button class=""  @click="toggle">Add a new Address</button></div>
+        <div x-show="open">
+            <h2 class="mb-4">New Address</h2>
+            {%  form 'customer_address', customer.new_address  %}
+                    {{ form.errors | default_errors }}
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="First name" name="address[first_name]" value="{{ form.first_name}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Last name" name="address[last_name]" value="{{ form.last_name}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Company" name="address[company]" value="{{ form.company}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Address 1" name="address[address1]" value="{{ form.address1}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Address 2" name="address[address2]" value="{{ form.address2}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="City" name="address[city]" value="{{ form.city }}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <input class="contact_text_input" placeholder="Phone" name="address[phone]" value="{{ form.phone }}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <p>Country/region</p>
+                        <select name="address[country]" class="el_country" data-default="{{ form.country }}">
+                            {{ all_country_option_tags }}
+                        </select>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <p>Province</p>
+                        <select name="address[province]" class="el_province" data-default="{{ form.province }}">
+                            {% comment %} <option x-for="(province, index) in province_array" :key="index" :value="province[0]"> {{province[1]}}</option> {% endcomment %}
+                            <template x-for="(province, index) in province_array" :key="index">
+                                <option :value="province" x-text="province"></option>
+                            </template>
+                        </select>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <input class="contact_text_input" placeholder="Postal/Zip code" name="address[zip]" value="{{ form.zip }}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        {{ form.set_as_default_checkbox }}
+                        <span>Set as default address</span>
+                    </div>
+                    <div class="contact_input_wrapper flex justify-center gap-x-3">
+                            <input type="submit"  class="form_submit_btn" value="Add address"/>
+                            <button  class="form_submit_btn" @click.prevent="hide">Cancel</button>
+                    </div>
+                
+            {% endform %}
+            
+        </div>
+    </div>
+    {% for address in customer.addresses %}
+        <div x-data="edit_address_component" class="mt-3">
+            {%- if address == customer.default_address -%}
+                    <h2>Default Address</h2>
+            {%- endif -%}
+            <p> {{address.first_name}} {{address.last_name}}</p>
+            {% if address.address1 %}
+                <p class=" mt-2">{{address.address1 }}</p>
+                {% elsif address.address2%}
+                    <p class=" mt-2">{{address.address2}}</p>
+            {% endif %}
+            <p class=" mt-2">{{ address.country}}</p>
+            <div class=" mb-1">
+                <button class="edit_btn" @click="toggle">Edit</button>
+                
+                <form class="" method="post" action="/account/addresses/{{ address.id }}">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="">delete</button>
+                </form>
+            </div>
+            <div x-show="open">
+                {% form 'customer_address', address %}
+                    {{ form.errors | default_errors }}
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="First name" name="address[first_name]" value="{{ form.first_name}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Last name" name="address[last_name]" value="{{ form.last_name}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Company" name="address[company]" value="{{ form.company}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Address 1" name="address[address1]" value="{{ form.address1}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="Address 2" name="address[address2]" value="{{ form.address2}}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                            <input class="contact_text_input" placeholder="City" name="address[city]" value="{{ form.city }}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <input class="contact_text_input" placeholder="Phone" name="address[phone]" value="{{ form.phone }}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <p>Country/region</p>
+                        <select name="address[country]" class="el_country" data-default="{{ form.country }}">
+                            {{ all_country_option_tags }}
+                        </select>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <p>Province</p>
+                        <select name="address[province]" class="el_province" data-default="{{ form.province }}">
+                        </select>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        <input class="contact_text_input" placeholder="Postal/Zip code" name="address[zip]" value="{{ form.zip }}"/>
+                    </div>
+                    <div class="contact_input_wrapper">
+                        {{ form.set_as_default_checkbox }}
+                        <span>Set as default address</span>
+                    </div>
+                    <div class="contact_input_wrapper flex justify-center gap-x-3">
+                            <input type="submit"  class="form_submit_btn" value="Update address"/>
+                            <button  class="form_submit_btn" @click.prevent="hide">Cancel</button>
+                    </div>
+                
+                {% endform %}
+            </div>
+            
+        </div>
+    {% endfor %}
+     
+
+</div>
+<script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('new_address_component', () => ({
+             open: false,
+             country:null,
+             province:null,
+             province_array:[],
+             province_selected:null,
+             init() {
+                /*
+                    console.log('new_address_component hit',this.province_array[0]);
+                    let el_c = this.$el.querySelector(".el_country");
+                    let temp_province_array = this.province_array;
+                    el_c.addEventListener("change",function(e){
+                        let selected_country = e.target
+                        let provinces = selected_country.options[selected_country.selectedIndex].dataset.provinces
+                        provinces = JSON.parse(provinces);
+                        temp_province_array.splice(0,temp_province_array.length);
+                        provinces.forEach(function(element){
+                            console.log(element[0]);
+                            temp_province_array.push(element[0]);
+                        });
+                    });
+
+                */
+                console.log('new_address_component hit',this.province_array);
+                let el_c = this.$el.querySelector(".el_country");
+                // selected_country = el_c.querySelector(`option[value="${el_c.dataset.default}"]`);
+                // selected_country.selected = true;
+
+                // let el_p = this.$el.querySelector(".el_province");
+                // let provinces = JSON.parse(selected_country.dataset.provinces);
+                
+                // const fragment = new DocumentFragment();
+                // for (const province of provinces) {
+                //     const option = document.createElement("option");
+                //     option.textContent = province[0];
+                //     if(province[0] == el_p.dataset.default){
+                //         option.selected = true;
+                //     }
+                //     fragment.append(option);
+                // }
+
+                // el_p.append(fragment);
+                
+                console.log(el_c,"el_c");
+                let temp_province_array = this.province_array;
+                let component = this.$el;
+                el_c.addEventListener("change",function(e){
+                    let selected_country = e.target
+                    let provinces = selected_country.options[selected_country.selectedIndex].dataset.provinces
+                    provinces = JSON.parse(provinces);
+                    console.log("new province changed")
+                    let el_p = component.querySelector(".el_province");
+                    
+                    el_p.replaceChildren();
+                    const fragment = new DocumentFragment();
+                    for (const province of provinces) {
+                        const option = document.createElement("option");
+                        option.textContent = province[0];
+                        // if(province[0] == el_p.dataset.default){
+                        //     option.selected = true;
+                        // }
+                        fragment.append(option);
+                    }
+                    el_p.append(fragment);
+                });
+                     
+              },
+             show(){
+                this.open = true;
+             },
+             hide(e){
+                this.open= false;
+             },
+             toggle() {
+                this.open = !this.open;
+             },
+             countryChange(e){
+                let selected_country = e.target
+                let provinces = selected_country.options[selected_country.selectedIndex].dataset.provinces
+                provinces = JSON.parse(provinces);
+               
+                provinces.forEach(function(element){
+                    console.log(self.province_array);
+                    self.province_array.push(element[0]);
+                });
+             }
+               
+
+         }))
+
+         Alpine.data('edit_address_component', () => ({
+             open: false,
+             country:null,
+             province:null,
+             province_array:[],
+             province_selected:null,
+             init() {
+                console.log('edit_address_component hit',this.province_array);
+                let el_c = this.$el.querySelector(".el_country");
+                selected_country = el_c.querySelector(`option[value="${el_c.dataset.default}"]`);
+                selected_country.selected = true;
+
+                let el_p = this.$el.querySelector(".el_province");
+                let provinces = JSON.parse(selected_country.dataset.provinces);
+                
+                const fragment = new DocumentFragment();
+                for (const province of provinces) {
+                    const option = document.createElement("option");
+                    option.textContent = province[0];
+                    if(province[0] == el_p.dataset.default){
+                        option.selected = true;
+                    }
+                    fragment.append(option);
+                }
+
+                el_p.append(fragment);
+                
+                console.log(el_c,"el_c");
+                let temp_province_array = this.province_array;
+                let component = this.$el;
+                el_c.addEventListener("change",function(e){
+                    let selected_country = e.target
+                    let provinces = selected_country.options[selected_country.selectedIndex].dataset.provinces
+                    provinces = JSON.parse(provinces);
+
+                    let el_p = component.querySelector(".el_province");
+                    
+                    el_p.replaceChildren();
+                    const fragment = new DocumentFragment();
+                    for (const province of provinces) {
+                        const option = document.createElement("option");
+                        option.textContent = province[0];
+                        // if(province[0] == el_p.dataset.default){
+                        //     option.selected = true;
+                        // }
+                        fragment.append(option);
+                    }
+                    el_p.append(fragment);
+                });
+                     
+              },
+             show(){
+                this.open = true;
+             },
+             hide(){
+                this.open= false;
+             },
+             toggle() {
+                this.open = !this.open;
+             },
+             countryChange(e){
+                let selected_country = e.target
+                let provinces = selected_country.options[selected_country.selectedIndex].dataset.provinces
+                provinces = JSON.parse(provinces);
+               
+                provinces.forEach(function(element){
+                    console.log(self.province_array);
+                    self.province_array.push(element[0]);
+                });
+             }           
+               
+
+         }))
+      });
+</script>
+{% schema %}
+    {
+        "name": "Address Section",
+        "class": "account_section_class",
+        "settings": [
+            ]
+    }
+    {% endschema %}

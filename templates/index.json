@@ -9,7 +9,10 @@
                 "selected_collection":"All",
                 "display_length":20
             }
+        },
+        "template_footer":{
+            "type": "section_footer"
         }
     },
-    "order": ["template_header","template_products"]
+    "order": ["template_header","template_products","template_footer"]
 }

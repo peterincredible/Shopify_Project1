@@ -391,3 +391,53 @@ body{
 .order_detail_wrapper table tr td:last-child{
   @apply text-right;
 }
+
+.address_form_container{
+   @apply flex items-center flex-col ;
+}
+
+.adrdress_form_header{
+  @apply w-full max-w-[450px] my-6 text-xl font-assistant;
+}
+.address_form_wrapper,.address_form_wrapper form{
+  @apply max-w-[450px] w-full;
+}
+
+.form_new_address_btn{
+  background-color:rgba(18,18,18, 1);
+  @apply  text-white w-[200px] h-[50px] text-sm transition ease-in-out hover:h-[52px] hover:w-[205px];
+}
+.form_address_edit_btn{
+  background-color:rgba(18,18,18, 1);
+  @apply  text-white w-[200px] h-[50px] text-sm cursor-pointer;
+}
+.form_address_cancel_btn{
+  background-color:#ffff;
+  border: 1px solid rgba(18,18,18,0.55);
+  color:rgb(18,18,18);
+  @apply  text-black w-[200px] h-[50px] text-sm ;
+}
+.address_edit_minor_texts{
+  color:rgba(18,18,18, 0.75);
+  @apply font-assistant;
+}
+
+.footer-container{
+  border-top: 1px solid rgba(18,18,18,.08);
+}
+
+.input-container p{
+    color:rgb(18,18,18);
+}
+.input-container div{
+ border: 1px solid rgba(18,18,18, 0.75);
+ @apply px-3 py-3;
+}
+.input-container div input{
+    @apply focus-visible:outline-none;
+}
+
+.footer-icon-wrapper{
+  border-top: 1px solid rgba(18,18,18,.08);
+  @apply  flex justify-center mt-10 gap-x-3 w-full  pt-8;
+}
